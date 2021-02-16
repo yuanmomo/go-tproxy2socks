@@ -3,8 +3,8 @@ cd main && GOOS=linux GOARCH=mipsle GOMIPS=softfloat go build -ldflags "-s -w" -
 
 cd .. && upx --best go-tproxy2socks
 
-scp go-tproxy2socks root@10.10.1.1:/usr/bin
-scp monitor.sh root@10.10.1.1:/root/
+#scp go-tproxy2socks root@10.10.1.1:/usr/bin
+#scp monitor.sh root@10.10.1.1:/root/
 
 
 

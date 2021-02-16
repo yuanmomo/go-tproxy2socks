@@ -1,5 +1,5 @@
 #!/bin/sh      //解释所用脚本语言
-# 添加定时任务到 crontab -e  "*/2 * * * * sh /root/monitor.sh" 
+# 添加定时任务到 crontab -e  "*/2 * * * * sh /root/monitor.sh"
 
 #************************************************
 #函数:CheckProcess
@@ -29,18 +29,19 @@ CheckProcess()
     fi
 }
 
+ulimit -v 32768 # Limit memory usage to at most 32MB
+
+
 #检查是否存在进程,这里引号里的部分参照自己的程序更改
-while [ 1 ];do
-    CheckProcess "/usr/bin/go-tproxy2socks";
-    #$? 是shell标准变量,是上一个函数执行完毕return值
-    Check_Result=$?
-    if [ $Check_Result -eq 1 ]; then
-        #有错误则杀死所有进程,如果并将标准输出及标准错误重定向到/dev/null
-        #因为如果程序没有运行,进程数为0,你是无法kill的
-        #然后重新启动进程
-        killall -9 /usr/bin/go-tproxy2socks > /dev/null 2>&1
-        /usr/bin/go-tproxy2socks -socks "socks5://10.10.1.4:1086"
-    fi
-    sleep 10
-done
+CheckProcess "/usr/bin/go-tproxy2socks";
+#$? 是shell标准变量,是上一个函数执行完毕return值
+Check_Result=$?
+if [ $Check_Result -eq 1 ]; then
+    #有错误则杀死所有进程,如果并将标准输出及标准错误重定向到/dev/null
+    #因为如果程序没有运行,进程数为0,你是无法kill的
+    #然后重新启动进程
+    echo "start /usr/bin/go-tproxy2socks at $(date  "+%F %X")" >> /var/log/go.log
+    killall -9 /usr/bin/go-tproxy2socks > /dev/null 2>&1
+    /usr/bin/go-tproxy2socks -socks "socks5://10.10.1.4:1087" > /dev/null 2>&1  &
+fi
 
