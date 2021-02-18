@@ -1,4 +1,4 @@
-#!/bin/sh      //解释所用脚本语言
+#!/bin/sh
 # 添加定时任务到 crontab -e  "*/2 * * * * sh /root/monitor.sh"
 
 #************************************************
@@ -29,7 +29,7 @@ CheckProcess()
     fi
 }
 
-ulimit -v 32768 # Limit memory usage to at most 32MB
+ulimit -v 49152 # Limit memory usage to at most 32MB
 
 
 #检查是否存在进程,这里引号里的部分参照自己的程序更改

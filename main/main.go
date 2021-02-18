@@ -103,7 +103,7 @@ func handleConnection(test bool, conn net.Conn,socksDialer *proxy.Dialer) {
 	}
 	// 设置超时？
 	conn.(*net.TCPConn).SetKeepAlive(true)
-	conn.(*net.TCPConn).SetKeepAlivePeriod(20 * time.Second)
+	conn.(*net.TCPConn).SetKeepAlivePeriod(5 * time.Second)
 	conn.(*net.TCPConn).SetNoDelay(false)
 
 	tc, ok := conn.(*net.TCPConn)
